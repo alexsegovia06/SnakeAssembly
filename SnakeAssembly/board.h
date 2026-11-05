@@ -5,3 +5,5 @@ void gotoXY(int x, int y);
 void drawBoard();
 
 int computeBorderLength();
+
+bool isInsideBoard(int x, int y);

@@ -30,3 +30,25 @@ int computeBorderLength() {
     }
     return result;
 }
+
+bool isInsideBoard(int x, int y) {
+    int result = 0;
+    __asm {
+        mov eax, x
+        cmp eax, 0
+        jl out_of_bounds
+        cmp eax, BOARD_WIDTH
+        jge out_of_bounds
+        mov eax, y
+        cmp eax, 0
+        jl out_of_bounds
+        cmp eax, BOARD_HEIGHT
+        jge out_of_bounds
+        mov result, 1
+        jmp bounds_done
+        out_of_bounds :
+        mov result, 0
+            bounds_done :
+    }
+    return result != 0;
+}
