@@ -20,3 +20,13 @@ void drawBoard() {
     for (int x = 0; x < BOARD_WIDTH + 2; x++) std::cout << "#";
     std::cout << "\n";
 }
+
+int computeBorderLength() {
+    int result = 0;
+    __asm {
+        mov eax, BOARD_WIDTH
+        add eax, 2
+        mov result, eax
+    }
+    return result;
+}
