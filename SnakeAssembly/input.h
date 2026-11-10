@@ -9,11 +9,8 @@ enum Direction
 	STOP
 };
 
-Direction lastDirection = RIGHT;
-Direction newDirection = RIGHT;
-
 bool keyAvailable();
 Direction keyValid();
 char readKey();
 bool areOppositeDirections(Direction first, Direction second);
-void updateDirection();
+Direction updateDirection();
