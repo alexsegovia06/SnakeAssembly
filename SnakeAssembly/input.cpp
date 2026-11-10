@@ -1,6 +1,9 @@
 #include <conio.h>
 #include "input.h"
 
+Direction lastDirection = RIGHT;
+Direction newDirection = RIGHT;
+
 bool keyAvailable() {
     return _kbhit() != 0;
 }
@@ -16,17 +19,28 @@ Direction keyValid() {
 			key = readKey();
 			switch (key) {
 				case 72: return UP;// Up arrow
-				case 119: return UP; // 'w' key
 				case 80: return DOWN; // Down arrow
-				case 115: return DOWN; // 's' key
 				case 75: return LEFT; // Left arrow
-				case 97: return LEFT; // 'a' key
 				case 77: return RIGHT; // Right arrow
-				case 100: return RIGHT; // 'd' key
-				case 27: return STOP; // Escape key
-				default: return INVALID;
 			}
-		}
+        }
+        else {
+            switch (key) {
+			case 'w':
+			case 'W':
+				return UP;
+			case 's':
+			case 'S':
+				return DOWN;
+			case 'a':
+			case 'A':
+				return LEFT;
+			case 'd':
+			case 'D':
+				return RIGHT;
+            case 27: return STOP; // Escape key
+            }
+        }
 	}
 	return INVALID;
 }
@@ -78,17 +92,14 @@ bool areOppositeDirections(Direction first, Direction second) {
             mov res, eax
     }
 
-    if (res == 0) {
-        return false;
-    }
-
-    return true;
+    return res != 0;
 }
 
-void updateDirection() {
-    Direction newDir = keyValid();
+Direction updateDirection() {
+	Direction newDir = keyValid();
     if (newDir != INVALID && !areOppositeDirections(lastDirection, newDir)) {
         newDirection = newDir;
         lastDirection = newDir;
     }
+	return  newDirection;
 }
