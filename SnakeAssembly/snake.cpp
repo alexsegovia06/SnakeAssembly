@@ -54,3 +54,31 @@ Position nextPosition(Position head, Direction dir) {
 	Position next = { x, y };
 	return next;
 }
+
+bool isSnakeCollidingWithItself(const Snake& s) {
+	Position newHead = nextPosition(s.body[0], s.dir);
+	for (size_t i = 1; i + 1 < s.body.size(); i++) {
+		if (newHead.x == s.body[i].x && newHead.y == s.body[i].y) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void drawSnake(const Snake& s) {
+	for (size_t i = s.body.size(); i > 1; i--) {
+		const Position& segment = s.body[i - 1];
+		gotoXY(segment.x+1, segment.y+1);
+		std::cout << 0;
+	}
+
+	char headChar = '>';
+	switch (s.dir) {
+		case UP: headChar = '^'; break;
+		case DOWN: headChar = 'v'; break;
+		case LEFT: headChar = '<'; break;
+		case RIGHT: headChar = '>'; break;
+	}
+	gotoXY(s.body[0].x+1, s.body[0].y+1);
+	std::cout << headChar;
+}
