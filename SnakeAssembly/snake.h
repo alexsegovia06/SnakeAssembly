@@ -1,16 +1,10 @@
 #pragma once
 #include <vector>
+#include "input.h"
 
 struct Position {
     int x; //columna
     int y; // fila
-};
-
-enum Direction {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
 };
 
 struct Snake {

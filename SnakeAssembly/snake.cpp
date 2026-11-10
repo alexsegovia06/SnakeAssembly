@@ -1,6 +1,7 @@
 #include <iostream>
 #include "snake.h"
 #include "board.h"
+#include "input.h"
 
 Position snakeBody[MAX_LENGTH];
 int snakeLength;

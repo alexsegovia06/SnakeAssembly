@@ -26,18 +26,25 @@ int main() {
 
     bool running = true;
     while (running) {
-        system("cls");
-        //drawBoard();
-        //drawSnake();
-        drawFood();
+		Direction newDir = updateDirection();
 
-        if (keyAvailable()) {
-            char key = readKey();
-            gotoXY(0, BOARD_HEIGHT + 3);
-            std::cout << "Tecla detectada: " << key << "   ";
-            if (key == 27) running = false;
+        if (newDir == STOP) {
+			running = false;
+            continue;
         }
 
+		s.dir = newDir;
+
+		Position newHead = nextPosition(s.body[0], s.dir);
+
+        for (size_t i = s.body.size() - 1; i > 0; i--) {
+			s.body[i] = s.body[i - 1];
+        }
+        s.body[0] = newHead;
+
+        system("cls");
+		printSnake(s);
+		drawFood();
         gameDelay(200);
     }
 
