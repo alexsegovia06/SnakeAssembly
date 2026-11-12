@@ -6,11 +6,8 @@ enum Direction
 	LEFT,
 	RIGHT,
 	INVALID,
-	STOP
+	STOP,
+	BEGINNING
 };
 
-bool keyAvailable();
-Direction keyValid();
-char readKey();
-bool areOppositeDirections(Direction first, Direction second);
 Direction updateDirection();

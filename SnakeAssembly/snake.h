@@ -21,5 +21,6 @@ void printSnake(const Snake& s);
 Position nextPosition(Position head, Direction dir);
 
 void initSnake();
-void drawSnake();
+void drawSnake(const Snake& s);
 void debugPrintSnake();
+bool isSnakeCollidingWithItself(const Snake& s);

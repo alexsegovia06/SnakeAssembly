@@ -12,21 +12,19 @@ int main() {
     Snake s;
 	initSnake( s, 10, 5, 3);
 
-	std::cout << "Snake inicializado:\n";
-	printSnake(s);
-
-	Position p = nextPosition(s.body[0], s.dir);
-	std::cout << "Next position: (" << p.x << ", " << p.y << ") esperando (10+1,5)= (11,5) \n";
-
-	p = nextPosition(s.body[0], UP);
-	std::cout << "Next position: (" << p.x << ", " << p.y << ") esperando (10,4) \n";
-
-    std::cout << "\nPresiona Enter para continuar...";
-    std::cin.get();
-
     bool running = true;
+	Direction newDir = BEGINNING;
+	std::cout << "Presiona una tecla de dirección para iniciar el juego...\n";
+	system("cls");
+	drawBoard();
+	drawSnake(s);
     while (running) {
-		Direction newDir = updateDirection();
+		newDir = updateDirection();
+        
+		if (newDir == BEGINNING) {
+			gameDelay(50);
+			continue;
+        }
 
         if (newDir == STOP) {
 			running = false;
@@ -37,15 +35,26 @@ int main() {
 
 		Position newHead = nextPosition(s.body[0], s.dir);
 
+		if (isSnakeCollidingWithItself(s) || !isInsideBoard(newHead.x, newHead.y)) {
+			std::cout << "Game Over!\n";
+			newDir = STOP;
+			running = false;
+			continue;
+		}
+
+		Position oldTail = s.body.back();
+
         for (size_t i = s.body.size() - 1; i > 0; i--) {
 			s.body[i] = s.body[i - 1];
         }
         s.body[0] = newHead;
 
-        system("cls");
-		printSnake(s);
+		gotoXY(oldTail.x + 1, oldTail.y + 1);
+		std::cout << ' ';
+
+		drawSnake(s);
 		drawFood();
-        gameDelay(200);
+        gameDelay(150);
     }
 
     return 0;

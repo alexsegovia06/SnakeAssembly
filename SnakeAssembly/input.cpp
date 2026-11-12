@@ -1,14 +1,14 @@
 #include <conio.h>
 #include "input.h"
 
-Direction lastDirection = RIGHT;
-Direction newDirection = RIGHT;
+Direction lastDirection = BEGINNING;
+Direction newDirection = BEGINNING;
 
 bool keyAvailable() {
     return _kbhit() != 0;
 }
 
-char readKey() {
+int readKey() {
     return _getch();
 }
 
