@@ -11,3 +11,4 @@ enum Direction
 };
 
 Direction updateDirection();
+void resetDirection();

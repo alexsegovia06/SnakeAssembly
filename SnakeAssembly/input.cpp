@@ -103,3 +103,8 @@ Direction updateDirection() {
     }
 	return  newDirection;
 }
+
+void resetDirection() {
+	lastDirection = BEGINNING;
+	newDirection = BEGINNING;
+}
