@@ -3,3 +3,4 @@ void drawWin();
 void drawLose();
 void drawBeginningMessage();
 bool drawWannaPlayAgain();
+int chooseDifficulty();
