@@ -17,6 +17,7 @@ int main() {
 
     while (play) {
         bool running = true;
+        int movementDelay = chooseDifficulty();
 
         initSnake(s, 10, 5, 3);
         placeFood(s);
@@ -74,7 +75,7 @@ int main() {
 
                 drawSnake(s);
                 drawFood();
-                gameDelay(150);
+                gameDelay(movementDelay);
             }
         play = drawWannaPlayAgain();
     }
