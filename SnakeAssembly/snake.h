@@ -13,10 +13,10 @@ struct Snake {
 };
 
 const int POINTS_PER_FOOD = 10;
-extern Position snakeBody[MAX_LENGTH];
+const int MAX_LENGTH = 100;
+extern Position snakeBody [MAX_LENGTH];
 extern int snakeLength;
 
-const int POINTS_PER_FOOD = 10;
 
 void initSnake(Snake& s, int x, int y, int length);
 void printSnake(const Snake& s);
