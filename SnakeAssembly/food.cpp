@@ -14,7 +14,7 @@ int asmMod(int value, int divisor) {
     __asm {
         mov eax, value
         cdq
-        idiv divisor; edx = residuo
+        idiv divisor
         mov result, edx
     }
     return result;
@@ -33,12 +33,12 @@ bool isFoodOnSnake(const Snake& s) {
         cmp ecx, len
             jge check_done
             mov eax, ecx
-            imul eax, 8; Position = 8 bytes(x, y)
-            add eax, esi; eax ->& arr[i]
-            mov edx, [eax]; x del segmento
+            imul eax, 8
+            add eax, esi
+            mov edx, [eax]
             cmp edx, fx
             jne next_i
-            mov edx, [eax + 4]; y del segmento
+            mov edx, [eax + 4]
             cmp edx, fy
             jne next_i
             mov found, 1
@@ -77,6 +77,8 @@ bool isHeadOnFood(int headX, int headY) {
 }
 
 void drawFood() {
-    gotoXY(food.x + 1, food.y + 1);
-    std::cout << "*";
+    gotoCell(food.x, food.y);
+    setColor(COLOR_FOOD);
+    std::cout << "* ";
+    setColor(COLOR_DEFAULT);
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "snake.h" // reutiliza Position y Snake
+#include "snake.h"
  
 extern Position food;
  
