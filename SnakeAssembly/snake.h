@@ -12,7 +12,7 @@ struct Snake {
 	Direction dir;
 };
 
-const int MAX_LENGTH = 100;
+const int POINTS_PER_FOOD = 10;
 extern Position snakeBody[MAX_LENGTH];
 extern int snakeLength;
 
