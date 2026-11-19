@@ -38,7 +38,7 @@ Direction keyValid() {
 			case 'd':
 			case 'D':
 				return RIGHT;
-            case 27: return STOP; // Escape key
+            case 27: return STOP;
             }
         }
 	}
@@ -48,7 +48,6 @@ Direction keyValid() {
 bool areOppositeDirections(Direction first, Direction second) {
     int res;
 
-	// If res = 1, the directions are opposite; if res = 0, they are not opposite
     __asm {
         mov ecx, first
         mov edx, second
@@ -64,7 +63,6 @@ bool areOppositeDirections(Direction first, Direction second) {
         je check_right
         jmp finish_check
 
-		// Check if the second direction is the opposite of the first
         check_up :
             cmp edx, DOWN
             je opposite

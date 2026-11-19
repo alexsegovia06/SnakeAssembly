@@ -68,8 +68,14 @@ void drawSnake(const Snake& s) {
 	setColor(COLOR_SNAKE_BODY);
 	for (size_t i = s.body.size(); i > 1; i--) {
 		const Position& segment = s.body[i - 1];
+		const Position& towardsHead = s.body[i - 2];
 		gotoCell(segment.x, segment.y);
-		std::cout << "OO";
+		if (segment.y == towardsHead.y) {
+			std::cout << "OO";
+		}
+		else {
+			std::cout << "O ";
+		}
 	}
 
 	setColor(COLOR_SNAKE_HEAD);
@@ -77,8 +83,8 @@ void drawSnake(const Snake& s) {
 	switch (s.dir) {
 	case UP:    headGlyph = "^ "; break;
 	case DOWN:  headGlyph = "v "; break;
-	case LEFT:  headGlyph = "<o"; break;
-	case RIGHT: headGlyph = "o>"; break;
+	case LEFT:  headGlyph = "<0"; break;
+	case RIGHT: headGlyph = "0>"; break;
 	}
 	gotoCell(s.body[0].x, s.body[0].y);
 	std::cout << headGlyph;
