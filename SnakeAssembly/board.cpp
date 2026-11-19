@@ -9,16 +9,34 @@ void gotoXY(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+void gotoCell(int x, int y) {
+    gotoXY(x * CELL_WIDTH + 1, y + 1);
+}
+
+void setColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)color);
+}
+
 void drawBoard() {
-    for (int x = 0; x < BOARD_WIDTH + 2; x++) std::cout << "#";
+    int topLen = BOARD_WIDTH * CELL_WIDTH + 2;
+
+    setColor(COLOR_BORDER);
+    for (int x = 0; x < topLen; x++) std::cout << "#";
     std::cout << "\n";
+
     for (int y = 0; y < BOARD_HEIGHT; y++) {
+        setColor(COLOR_BORDER);
         std::cout << "#";
-        for (int x = 0; x < BOARD_WIDTH; x++) std::cout << " ";
+        setColor(COLOR_DEFAULT);
+        for (int x = 0; x < BOARD_WIDTH * CELL_WIDTH; x++) std::cout << " ";
+        setColor(COLOR_BORDER);
         std::cout << "#\n";
     }
-    for (int x = 0; x < BOARD_WIDTH + 2; x++) std::cout << "#";
+
+    for (int x = 0; x < topLen; x++) std::cout << "#";
     std::cout << "\n";
+
+    setColor(COLOR_DEFAULT);
 }
 
 int computeBorderLength() {
