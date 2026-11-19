@@ -3,8 +3,6 @@
 #include "board.h"
 #include "input.h"
 
-Position snakeBody[MAX_LENGTH];
-int snakeLength;
 
 void initSnake(Snake& s, int x, int y, int length) {
 	s.body.clear();
@@ -55,9 +53,10 @@ Position nextPosition(Position head, Direction dir) {
 	return next;
 }
 
-bool isSnakeCollidingWithItself(const Snake& s) {
-	Position newHead = nextPosition(s.body[0], s.dir);
-	for (size_t i = 1; i + 1 < s.body.size(); i++) {
+bool isSnakeCollidingWithItself(const Snake& s, Position newHead, bool grow) {
+	size_t limit = s.body.size();
+	if (!grow) limit--;
+	for (size_t i = 1; i < limit; i++) {
 		if (newHead.x == s.body[i].x && newHead.y == s.body[i].y) {
 			return true;
 		}
@@ -81,4 +80,28 @@ void drawSnake(const Snake& s) {
 	}
 	gotoXY(s.body[0].x+1, s.body[0].y+1);
 	std::cout << headChar;
+}
+
+int addScore(int score, int points) {
+	int result = score;
+	__asm {
+		mov eax, result; eax = puntaje actual
+		add eax, points; eax = puntaje + puntos
+		mov result, eax; guardar el nuevo puntaje
+	}
+	return result;
+}
+
+Position moveSnake(Snake& s, Position newHead, bool grow) {
+	Position oldTail = s.body.back();
+	if (grow) {
+		s.body.insert(s.body.begin(), newHead);
+	}
+	else {
+		for (size_t i = s.body.size() - 1; i > 0; i--) {
+			s.body[i] = s.body[i - 1];   
+		}
+		s.body[0] = newHead;
+	}
+	return oldTail;
 }

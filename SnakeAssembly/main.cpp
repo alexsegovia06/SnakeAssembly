@@ -22,6 +22,7 @@ int main() {
         initSnake(s, 10, 5, 3);
         placeFood(s);
         resetDirection();
+        int score = 0;
 
         Direction newDir = BEGINNING;
         std::cout << "Presiona una tecla de dirección para iniciar el juego...\n";
@@ -49,29 +50,36 @@ int main() {
                 s.dir = newDir;
 
                 Position newHead = nextPosition(s.body[0], s.dir);
+                bool grow = isHeadOnFood(newHead.x, newHead.y);
 
-                if (isSnakeCollidingWithItself(s) || !isInsideBoard(newHead.x, newHead.y)) {
+                if (!isInsideBoard(newHead.x, newHead.y) || isSnakeCollidingWithItself(s, newHead, grow)) {
+                    gotoXY(0, BOARD_HEIGHT + 4);
                     drawLose();
-                    newDir = STOP;
+                    std::cout << "    Final Score: " << score << "\n";
                     running = false;
                     continue;
                 }
 
-                if (isHeadOnFood(newHead.x, newHead.y)) {
-                    s.body.insert(s.body.begin(), newHead);
+                Position oldTail = moveSnake(s, newHead, grow);
+                if (grow) {
+                    score = addScore(score, POINTS_PER_FOOD);
+
+                    if ((int)s.body.size() == BOARD_WIDTH * BOARD_HEIGHT) {
+                        gotoXY(0, BOARD_HEIGHT + 4);
+                        drawWin();
+                        std::cout << "    Final Score: " << score << "\n";
+                        running = false;
+                        continue;
+                    }
                     placeFood(s);
                 }
                 else {
-                    Position oldTail = s.body.back();
-
-                    for (size_t i = s.body.size() - 1; i > 0; i--) {
-                        s.body[i] = s.body[i - 1];
-                    }
-                    s.body[0] = newHead;
-
                     gotoXY(oldTail.x + 1, oldTail.y + 1);
                     std::cout << ' ';
                 }
+
+                gotoXY(0, BOARD_HEIGHT + 3);
+                std::cout << "Score: " << score << "   ";
 
                 drawSnake(s);
                 drawFood();
