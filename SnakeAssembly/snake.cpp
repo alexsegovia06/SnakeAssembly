@@ -6,17 +6,17 @@
 
 void initSnake(Snake& s, int x, int y, int length) {
 	s.body.clear();
-    for (int i = 0; i < length; i++) {
-        Position next = {x - i, y};
-        s.body.push_back(next);
-    }
+	for (int i = 0; i < length; i++) {
+		Position next = { x - i, y };
+		s.body.push_back(next);
+	}
 	s.dir = RIGHT;
 }
 
 void printSnake(const Snake& s) {
-    for (size_t i = 0; i < s.body.size(); i++) {
+	for (size_t i = 0; i < s.body.size(); i++) {
 		std::cout << "Segmento " << i << ": (" << s.body[i].x << ", " << s.body[i].y << ")\n";
-    }
+	}
 }
 
 Position nextPosition(Position head, Direction dir) {
@@ -40,13 +40,13 @@ Position nextPosition(Position head, Direction dir) {
 	int y = head.y;
 
 	__asm {
-		mov eax, x; eax = x actual de la cabeza
-		add eax, movX; eax = x + movX
-		mov x, eax; guardar la nueva x
+		mov eax, x
+		add eax, movX
+		mov x, eax
 
-		mov eax, y; eax = y actual de la cabeza
-		add eax, movY; eax = y + movY
-		mov y, eax; guardar la nueva y
+		mov eax, y
+		add eax, movY
+		mov y, eax
 	}
 
 	Position next = { x, y };
@@ -65,29 +65,33 @@ bool isSnakeCollidingWithItself(const Snake& s, Position newHead, bool grow) {
 }
 
 void drawSnake(const Snake& s) {
+	setColor(COLOR_SNAKE_BODY);
 	for (size_t i = s.body.size(); i > 1; i--) {
 		const Position& segment = s.body[i - 1];
-		gotoXY(segment.x+1, segment.y+1);
-		std::cout << 0;
+		gotoCell(segment.x, segment.y);
+		std::cout << "OO";
 	}
 
-	char headChar = '>';
+	setColor(COLOR_SNAKE_HEAD);
+	const char* headGlyph = ">>";
 	switch (s.dir) {
-		case UP: headChar = '^'; break;
-		case DOWN: headChar = 'v'; break;
-		case LEFT: headChar = '<'; break;
-		case RIGHT: headChar = '>'; break;
+	case UP:    headGlyph = "^^"; break;
+	case DOWN:  headGlyph = "vv"; break;
+	case LEFT:  headGlyph = "<o"; break;
+	case RIGHT: headGlyph = "o>"; break;
 	}
-	gotoXY(s.body[0].x+1, s.body[0].y+1);
-	std::cout << headChar;
+	gotoCell(s.body[0].x, s.body[0].y);
+	std::cout << headGlyph;
+
+	setColor(COLOR_DEFAULT);
 }
 
 int addScore(int score, int points) {
 	int result = score;
 	__asm {
-		mov eax, result; eax = puntaje actual
-		add eax, points; eax = puntaje + puntos
-		mov result, eax; guardar el nuevo puntaje
+		mov eax, result
+		add eax, points
+		mov result, eax
 	}
 	return result;
 }
@@ -99,7 +103,7 @@ Position moveSnake(Snake& s, Position newHead, bool grow) {
 	}
 	else {
 		for (size_t i = s.body.size() - 1; i > 0; i--) {
-			s.body[i] = s.body[i - 1];   
+			s.body[i] = s.body[i - 1];
 		}
 		s.body[0] = newHead;
 	}
