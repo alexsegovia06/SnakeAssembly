@@ -79,6 +79,6 @@ bool isHeadOnFood(int headX, int headY) {
 void drawFood() {
     gotoCell(food.x, food.y);
     setColor(COLOR_FOOD);
-    std::cout << "**";
+    std::cout << "* ";
     setColor(COLOR_DEFAULT);
 }

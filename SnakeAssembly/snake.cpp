@@ -75,8 +75,8 @@ void drawSnake(const Snake& s) {
 	setColor(COLOR_SNAKE_HEAD);
 	const char* headGlyph = ">>";
 	switch (s.dir) {
-	case UP:    headGlyph = "^^"; break;
-	case DOWN:  headGlyph = "vv"; break;
+	case UP:    headGlyph = "^ "; break;
+	case DOWN:  headGlyph = "v "; break;
 	case LEFT:  headGlyph = "<o"; break;
 	case RIGHT: headGlyph = "o>"; break;
 	}

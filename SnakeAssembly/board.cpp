@@ -17,12 +17,19 @@ void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)color);
 }
 
+void hideCursor() {
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = FALSE;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+}
+
 void drawBoard() {
     int topLen = BOARD_WIDTH * CELL_WIDTH + 2;
 
     setColor(COLOR_BORDER);
-    for (int x = 0; x < topLen; x++) std::cout << "#";
-    std::cout << "\n";
+    for (int x = 0; x < topLen - 1; x++) std::cout << (x % 2 == 0 ? "#" : " ");
+    std::cout << "#\n";
 
     for (int y = 0; y < BOARD_HEIGHT; y++) {
         setColor(COLOR_BORDER);
@@ -33,8 +40,8 @@ void drawBoard() {
         std::cout << "#\n";
     }
 
-    for (int x = 0; x < topLen; x++) std::cout << "#";
-    std::cout << "\n";
+    for (int x = 0; x < topLen - 1; x++) std::cout << (x % 2 == 0 ? "#" : " ");
+    std::cout << "#\n";
 
     setColor(COLOR_DEFAULT);
 }
