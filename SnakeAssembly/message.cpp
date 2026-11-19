@@ -32,10 +32,10 @@ int chooseDifficulty() {
     } while (choice < 1 || choice > 3);
 
     if (choice == 1) {
-        return 400;
+        return 150;
     }
     if (choice == 2) {
-        return 300;
+        return 100;
     }
-    return 200;
+    return 50;
 }
