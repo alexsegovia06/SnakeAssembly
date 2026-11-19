@@ -43,7 +43,6 @@ Calling convention: `cdecl`. No external assembler/linker or simulator — the g
 - Difficulty selector (easy / medium / hard) that changes the game's speed.
 - Win condition (snake fills the whole board) and lose condition (collision), each with its own end screen and final score.
 - "Play again?" prompt after each game ends.
-- Visual polish: console cursor hidden during gameplay, a dashed/textured border, and block-style characters (█ for the body, ♦ for food) instead of plain letters.
 
 ## How to build and run
 
