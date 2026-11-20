@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib> 
 #include <conio.h>
+#include <fstream>
 #include "board.h"
 
 static void drawFramedMessage(const std::string& text, int color) {
@@ -57,10 +58,10 @@ void drawTitleScreen() {
         << "  ____) | |\\  |/ ____ \\| . \\| |____ \n"
         << " |_____/|_| \\_/_/    \\_\\_|\\_\\______|\n";
     setColor(COLOR_DEFAULT);
-    std::cout << "\n  Controles:\n"
-        << "    Flechas o WASD para moverte\n"
-        << "    ESC para salir\n\n"
-        << "  Presiona cualquier tecla para continuar...";
+    std::cout << "\n  Controls:\n"
+        << "    Arrows or WASD to move\n"
+        << "    ESC to exit\n\n"
+        << "  Press any key to continue...";
     _getch();
     system("cls");
 }
@@ -84,4 +85,18 @@ int chooseDifficulty() {
         return 100;
     }
     return 50;
+}
+
+int loadHighScore() {
+    std::ifstream file("highscore.txt");
+    int highScore = 0;
+    if (file) {
+        file >> highScore;
+    }
+    return highScore;
+}
+
+void saveHighScore(int score) {
+    std::ofstream file("highscore.txt");
+    file << score;
 }

@@ -28,7 +28,7 @@ int main() {
         int score = 0;
 
         Direction newDir = BEGINNING;
-        std::cout << "Presiona una tecla de dirección para iniciar el juego...\n";
+        std::cout << "Press a direction key to start the game...\n";
         system("cls");
         drawBoard();
         drawSnake(s);
@@ -60,6 +60,14 @@ int main() {
                 Beep(200, 400);
                 drawLose();
                 std::cout << "    Final Score: " << score << "\n";
+                int highScore = loadHighScore();
+                if (score > highScore) {
+                    saveHighScore(score);
+                    std::cout << "    New record!\n";
+                }
+                else {
+                    std::cout << "    Best score: " << highScore << "\n";
+                }
                 running = false;
                 continue;
             }
@@ -73,6 +81,14 @@ int main() {
                     gotoXY(0, BOARD_HEIGHT + 4);
                     drawWin();
                     std::cout << "    Final Score: " << score << "\n";
+                    int highScore = loadHighScore();
+                    if (score > highScore) {
+                        saveHighScore(score);
+                        std::cout << "    New record!\n";
+                    }
+                    else {
+                        std::cout << "    Best score: " << highScore << "\n";
+                    }
                     running = false;
                     continue;
                 }
