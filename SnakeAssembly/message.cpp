@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cstdlib> 
+#include <conio.h>
 #include "board.h"
 
 static void drawFramedMessage(const std::string& text, int color) {
@@ -42,6 +44,25 @@ bool drawWannaPlayAgain() {
     char choice;
     std::cin >> choice;
     return (choice == 'Y' || choice == 'y');
+}
+
+void drawTitleScreen() {
+    system("cls");
+    setColor(COLOR_SUCCESS);
+    std::cout
+        << "   _____ _   _          _  ________ \n"
+        << "  / ____| \\ | |   /\\   | |/ /  ____|\n"
+        << " | (___ |  \\| |  /  \\  | ' /| |__   \n"
+        << "  \\___ \\| . ` | / /\\ \\ |  < |  __|  \n"
+        << "  ____) | |\\  |/ ____ \\| . \\| |____ \n"
+        << " |_____/|_| \\_/_/    \\_\\_|\\_\\______|\n";
+    setColor(COLOR_DEFAULT);
+    std::cout << "\n  Controles:\n"
+        << "    Flechas o WASD para moverte\n"
+        << "    ESC para salir\n\n"
+        << "  Presiona cualquier tecla para continuar...";
+    _getch();
+    system("cls");
 }
 
 int chooseDifficulty() {

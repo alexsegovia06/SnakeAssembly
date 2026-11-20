@@ -4,3 +4,4 @@ void drawLose();
 void drawBeginningMessage();
 bool drawWannaPlayAgain();
 int chooseDifficulty();
+void drawTitleScreen();
