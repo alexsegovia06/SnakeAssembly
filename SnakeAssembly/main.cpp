@@ -3,6 +3,7 @@
 #include <ctime>
 #include <string>
 #include <windows.h>
+#include <thread>
 #include "board.h"
 #include "snake.h"
 #include "food.h"
@@ -75,7 +76,7 @@ int main() {
             Position oldTail = moveSnake(s, newHead, grow);
             if (grow) {
                 score = addScore(score, POINTS_PER_FOOD);
-                Beep(800, 100);
+                std::thread(Beep, 800, 100).detach();
 
                 if ((int)s.body.size() == BOARD_WIDTH * BOARD_HEIGHT) {
                     gotoXY(0, BOARD_HEIGHT + 4);

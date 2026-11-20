@@ -33,7 +33,9 @@ void drawWin() {
 }
 
 void drawLose() {
-    drawFramedMessage("You Lose!", COLOR_DANGER);
+    setColor(COLOR_DANGER);
+    std::cout << "\n    You Lose!\n\n";
+    setColor(COLOR_DEFAULT);
 }
 
 void drawBeginningMessage() {
