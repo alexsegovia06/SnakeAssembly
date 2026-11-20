@@ -1,11 +1,36 @@
 #include <iostream>
+#include <string>
+#include "board.h"
+
+static void drawFramedMessage(const std::string& text, int color) {
+    const char* borderChar = "\xB2";
+    int innerWidth = (int)text.size() + 4; // 2 espacios de margen a cada lado
+    int pad = 2;
+
+    setColor(color);
+    for (int i = 0; i < innerWidth + 2; i++) std::cout << borderChar;
+    std::cout << "\n";
+
+    std::cout << borderChar;
+    setColor(COLOR_DEFAULT);
+    for (int i = 0; i < pad; i++) std::cout << " ";
+    std::cout << text;
+    for (int i = 0; i < pad; i++) std::cout << " ";
+    setColor(color);
+    std::cout << borderChar << "\n";
+
+    for (int i = 0; i < innerWidth + 2; i++) std::cout << borderChar;
+    std::cout << "\n";
+
+    setColor(COLOR_DEFAULT);
+}
 
 void drawWin() {
-    std::cout << "\n    You Win!\n";
+    drawFramedMessage("You Win!", COLOR_SUCCESS);
 }
 
 void drawLose() {
-    std::cout << "\n    You Lose!\n";
+    drawFramedMessage("You Lose!", COLOR_DANGER);
 }
 
 void drawBeginningMessage() {
