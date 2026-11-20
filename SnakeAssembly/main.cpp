@@ -14,6 +14,7 @@
 int main() {
     srand((unsigned)time(0));
     drawTitleScreen();
+    hideCursor();
     Snake s;
 
     bool play = true;

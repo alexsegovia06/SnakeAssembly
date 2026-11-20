@@ -66,6 +66,7 @@ void drawTitleScreen() {
         << "  Press any key to continue...";
     _getch();
     system("cls");
+    hideCursor();
 }
 
 int chooseDifficulty() {

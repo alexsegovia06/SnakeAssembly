@@ -19,6 +19,8 @@ void gotoCell(int x, int y);
 
 void setColor(int color);
 
+void hideCursor();
+
 void drawBoard();
 
 int computeBorderLength();
