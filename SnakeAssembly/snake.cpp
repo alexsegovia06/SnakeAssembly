@@ -68,14 +68,8 @@ void drawSnake(const Snake& s) {
 	setColor(COLOR_SNAKE_BODY);
 	for (size_t i = s.body.size(); i > 1; i--) {
 		const Position& segment = s.body[i - 1];
-		const Position& towardsHead = s.body[i - 2];
 		gotoCell(segment.x, segment.y);
-		if (segment.y == towardsHead.y) {
-			std::cout << "OO";
-		}
-		else {
-			std::cout << "O ";
-		}
+		std::cout << "O ";
 	}
 
 	setColor(COLOR_SNAKE_HEAD);
