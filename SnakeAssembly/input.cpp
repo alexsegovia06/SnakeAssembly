@@ -13,36 +13,70 @@ int readKey() {
 }
 
 Direction keyValid() {
-	if (keyAvailable()) {
-		int key = readKey();
-		if (key == 0 || key == 224) {
-			key = readKey();
-			switch (key) {
-				case 72: return UP;// Up arrow
-				case 80: return DOWN; // Down arrow
-				case 75: return LEFT; // Left arrow
-				case 77: return RIGHT; // Right arrow
-			}
-        }
-        else {
-            switch (key) {
-			case 'w':
-			case 'W':
-				return UP;
-			case 's':
-			case 'S':
-				return DOWN;
-			case 'a':
-			case 'A':
-				return LEFT;
-			case 'd':
-			case 'D':
-				return RIGHT;
-            case 27: return STOP;
-            }
-        }
-	}
-	return INVALID;
+    if (!_kbhit()) return INVALID;
+
+    int key = _getch();
+
+    // Las flechas llegan como un prefijo y luego su código
+    if (key == 0 || key == 224) {
+        key = _getch();
+    }
+
+    int result = INVALID;
+
+    __asm {
+        mov eax, key
+
+        cmp eax, 72       // Flecha arriba
+        je key_up
+        cmp eax, 'w'
+        je key_up
+        cmp eax, 'W'
+        je key_up
+
+        cmp eax, 80       // Flecha abajo
+        je key_down
+        cmp eax, 's'
+        je key_down
+        cmp eax, 'S'
+        je key_down
+
+        cmp eax, 75       // Flecha izquierda
+        je key_left
+        cmp eax, 'a'
+        je key_left
+        cmp eax, 'A'
+        je key_left
+
+        cmp eax, 77       // Flecha derecha
+        je key_right
+        cmp eax, 'd'
+        je key_right
+        cmp eax, 'D'
+        je key_right
+
+        cmp eax, 27       // Escape
+        je key_stop
+        jmp key_done
+
+        key_up :
+            mov result, UP
+            jmp key_done
+        key_down :
+            mov result, DOWN
+            jmp key_done
+        key_left :
+            mov result, LEFT
+            jmp key_done
+        key_right :
+            mov result, RIGHT
+            jmp key_done
+        key_stop :
+        mov result, STOP
+
+        key_done :
+    }
+    return static_cast<Direction>(result);
 }
 
 bool areOppositeDirections(Direction first, Direction second) {
