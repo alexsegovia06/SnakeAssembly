@@ -3,22 +3,25 @@
 #include "board.h"
 #include "input.h"
 
-
+// construye la serpiente inicial con una longitud determinada y una dirección inicial
 void initSnake(Snake& s, int x, int y, int length) {
 	s.body.clear();
 	for (int i = 0; i < length; i++) {
 		Position next = { x - i, y };
 		s.body.push_back(next);
 	}
+	// Dirección inicial fija
 	s.dir = RIGHT;
 }
 
+// Imprime las coordenadas de cada segmento.
 void printSnake(const Snake& s) {
 	for (size_t i = 0; i < s.body.size(); i++) {
 		std::cout << "Segmento " << i << ": (" << s.body[i].x << ", " << s.body[i].y << ")\n";
 	}
 }
 
+// Calcula dónde quedará la cabeza en el siguiente movimiento
 Position nextPosition(Position head, Direction dir) {
 	int movX = 0, movY = 0;
 	switch (dir) {
@@ -41,8 +44,8 @@ Position nextPosition(Position head, Direction dir) {
 
 	__asm {
 		mov eax, x
-		add eax, movX
-		mov x, eax
+		add eax, movX  //se mueve horizontalmente
+		mov x, eax		// guarda el resultado de vuelta en x 
 
 		mov eax, y
 		add eax, movY
@@ -53,8 +56,10 @@ Position nextPosition(Position head, Direction dir) {
 	return next;
 }
 
+// Revisa si la nueva cabeza choca con el propio cuerpo.
 bool isSnakeCollidingWithItself(const Snake& s, Position newHead, bool grow) {
 	size_t limit = s.body.size();
+	// Si la serpiente no crece, no necesitamos revisar el último segmento
 	if (!grow) limit--;
 	for (size_t i = 1; i < limit; i++) {
 		if (newHead.x == s.body[i].x && newHead.y == s.body[i].y) {
@@ -64,8 +69,10 @@ bool isSnakeCollidingWithItself(const Snake& s, Position newHead, bool grow) {
 	return false;
 }
 
+// Dibuja la serpiente en la pantalla, con un color diferente para la cabeza y el cuerpo.
 void drawSnake(const Snake& s) {
 	setColor(COLOR_SNAKE_BODY);
+	// Recorre de la cola hacia adelante y se detiene antes del índice 0
 	for (size_t i = s.body.size(); i > 1; i--) {
 		const Position& segment = s.body[i - 1];
 		gotoCell(segment.x, segment.y);
@@ -75,6 +82,7 @@ void drawSnake(const Snake& s) {
 	setColor(COLOR_SNAKE_HEAD);
 	const char* headGlyph = ">>";
 	switch (s.dir) {
+	//cambia la cabeza segun la dirección de movimiento
 	case UP:    headGlyph = "^ "; break;
 	case DOWN:  headGlyph = "v "; break;
 	case LEFT:  headGlyph = "<0"; break;
@@ -89,13 +97,14 @@ void drawSnake(const Snake& s) {
 int addScore(int score, int points) {
 	int result = score;
 	__asm {
-		mov eax, result
-		add eax, points
-		mov result, eax
+		mov eax, result   // Carga el puntaje actual
+		add eax, points   // Suma los puntos obtenidos
+		mov result, eax   // Guarda el total
 	}
 	return result;
 }
 
+// Avanza la serpiente una celda y devuelve la posición que ocupaba la cola
 Position moveSnake(Snake& s, Position newHead, bool grow) {
 	Position oldTail = s.body.back();
 	if (grow) {
