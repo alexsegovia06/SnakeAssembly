@@ -59,21 +59,21 @@ int computeBorderLength() {
 bool isInsideBoard(int x, int y) {
     int result = 0;
     __asm {
-        mov eax, x
-        cmp eax, 0
-        jl out_of_bounds
-        cmp eax, BOARD_WIDTH
-        jge out_of_bounds
-        mov eax, y
-        cmp eax, 0
-        jl out_of_bounds
-        cmp eax, BOARD_HEIGHT
-        jge out_of_bounds
-        mov result, 1
-        jmp bounds_done
-        out_of_bounds :
-        mov result, 0
-            bounds_done :
+        mov eax, x              // carga la coordenada x en EAX
+        cmp eax, 0              // compara x con 0 (límite izquierdo)
+        jl out_of_bounds        // si x < 0, está fuera del tablero
+        cmp eax, BOARD_WIDTH    // compara x con el ancho del tablero
+        jge out_of_bounds       // si x >= BOARD_WIDTH, está fuera (columnas válidas: 0..BOARD_WIDTH-1)
+        mov eax, y              // carga la coordenada y en EAX
+        cmp eax, 0              // compara y con 0 (límite superior)
+        jl out_of_bounds        // si y < 0, está fuera del tablero
+        cmp eax, BOARD_HEIGHT   // compara y con el alto del tablero
+        jge out_of_bounds       // si y >= BOARD_HEIGHT, está fuera (filas válidas: 0..BOARD_HEIGHT-1)
+        mov result, 1           // pasó las 4 comparaciones: la posición es válida
+        jmp bounds_done         // evita caer en la rama de "fuera de rango"
+    out_of_bounds:
+        mov result, 0           // marca la posición como inválida
+    bounds_done:
     }
     return result != 0;
 }
